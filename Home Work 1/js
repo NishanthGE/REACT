@@ -1,0 +1,67 @@
+import React, { useState } from 'react';
+import './App.css'; // Import custom styles
+
+const App = () => {
+  // Initial state for users
+  const [users, setUsers] = useState([
+    { id: 1, name: 'John Doe', email: 'john@example.com' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com' },
+  ]);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  // Function to handle adding a new user
+  const addUser = () => {
+    if (!name || !email) return; // Validate input
+
+    const newUser = {
+      id: users.length + 1, // Generate unique ID
+      name,
+      email,
+    };
+
+    // Update users state
+    setUsers([...users, newUser]);
+    setName(''); // Clear name input
+    setEmail(''); // Clear email input
+  };
+
+  return (
+    <div className="app-container">
+      <h1>User Management</h1>
+      <div className="input-container">
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <button onClick={addUser}>Add New</button>
+      </div>
+      <table className="user-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user.id}>
+              <td>{user.name}</td>
+              <td>{user.email}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default App;
